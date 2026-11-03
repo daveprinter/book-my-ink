@@ -30,7 +30,7 @@ function MyBookings() {
 
   const find = async () => {
     const r = await getMyBooking({ data: { ref: ref.trim(), email: email.trim() } }).catch(() => null);
-    if (!r) return toast.error("No booking found with that reference and email");
+    if (!r) { toast.error("No booking found with that reference and email"); return; }
     saveBooking({ ref: r.booking.ref, email: r.booking.email });
     reload();
   };

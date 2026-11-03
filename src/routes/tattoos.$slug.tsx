@@ -34,12 +34,13 @@ function Detail() {
   const { slug } = Route.useLoaderData();
   const t = getTattoo(slug)!;
   const [a, setA] = useState(0);
+  const angle = ANGLES[a]!;
   const q = quote(t.price);
   return (
     <div className="grid gap-10 px-6 py-10 md:px-12 lg:grid-cols-2">
       <div>
         <div className="flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-border bg-secondary">
-          <img src={t.image} alt={`${t.name} – ${ANGLES[a].label}`} width={512} height={512} className="h-full w-full object-cover transition duration-500" style={{ transform: ANGLES[a].style, filter: ANGLES[a].filter }} />
+          <img src={t.image} alt={`${t.name} – ${angle.label}`} width={512} height={512} className="h-full w-full object-cover transition duration-500" style={{ transform: angle.style, filter: angle.filter }} />
         </div>
         <div className="mt-3 grid grid-cols-6 gap-2">
           {ANGLES.map((x, i) => (
@@ -48,7 +49,7 @@ function Detail() {
             </button>
           ))}
         </div>
-        <p className="mt-2 text-center text-xs text-muted-foreground">Viewing: {ANGLES[a].label}</p>
+        <p className="mt-2 text-center text-xs text-muted-foreground">Viewing: {angle.label}</p>
       </div>
       <div className="space-y-6">
         <div>
