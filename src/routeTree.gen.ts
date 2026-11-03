@@ -10,33 +10,154 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as BookRouteImport } from './routes/book'
+import { Route as MyBookingsRouteImport } from './routes/my-bookings'
+import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as CategoriesIndexRouteImport } from './routes/categories.index'
+import { Route as CategoriesSlugRouteImport } from './routes/categories.$slug'
+import { Route as TattoosIndexRouteImport } from './routes/tattoos.index'
+import { Route as TattoosSlugRouteImport } from './routes/tattoos.$slug'
+import { Route as ApiPublicPaypalIpnRouteImport } from './routes/api/public/paypal-ipn'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookRoute = BookRouteImport.update({
+  id: '/book',
+  path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyBookingsRoute = MyBookingsRouteImport.update({
+  id: '/my-bookings',
+  path: '/my-bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriesIndexRoute = CategoriesIndexRouteImport.update({
+  id: '/categories/',
+  path: '/categories/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriesSlugRoute = CategoriesSlugRouteImport.update({
+  id: '/categories/$slug',
+  path: '/categories/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TattoosIndexRoute = TattoosIndexRouteImport.update({
+  id: '/tattoos/',
+  path: '/tattoos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TattoosSlugRoute = TattoosSlugRouteImport.update({
+  id: '/tattoos/$slug',
+  path: '/tattoos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicPaypalIpnRoute = ApiPublicPaypalIpnRouteImport.update({
+  id: '/api/public/paypal-ipn',
+  path: '/api/public/paypal-ipn',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/book': typeof BookRoute
+  '/my-bookings': typeof MyBookingsRoute
+  '/notifications': typeof NotificationsRoute
+  '/categories/$slug': typeof CategoriesSlugRoute
+  '/tattoos/$slug': typeof TattoosSlugRoute
+  '/categories/': typeof CategoriesIndexRoute
+  '/tattoos/': typeof TattoosIndexRoute
+  '/api/public/paypal-ipn': typeof ApiPublicPaypalIpnRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/book': typeof BookRoute
+  '/my-bookings': typeof MyBookingsRoute
+  '/notifications': typeof NotificationsRoute
+  '/categories/$slug': typeof CategoriesSlugRoute
+  '/tattoos/$slug': typeof TattoosSlugRoute
+  '/categories': typeof CategoriesIndexRoute
+  '/tattoos': typeof TattoosIndexRoute
+  '/api/public/paypal-ipn': typeof ApiPublicPaypalIpnRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/book': typeof BookRoute
+  '/my-bookings': typeof MyBookingsRoute
+  '/notifications': typeof NotificationsRoute
+  '/categories/$slug': typeof CategoriesSlugRoute
+  '/tattoos/$slug': typeof TattoosSlugRoute
+  '/categories/': typeof CategoriesIndexRoute
+  '/tattoos/': typeof TattoosIndexRoute
+  '/api/public/paypal-ipn': typeof ApiPublicPaypalIpnRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/book'
+    | '/my-bookings'
+    | '/notifications'
+    | '/categories/$slug'
+    | '/tattoos/$slug'
+    | '/categories/'
+    | '/tattoos/'
+    | '/api/public/paypal-ipn'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/admin'
+    | '/book'
+    | '/my-bookings'
+    | '/notifications'
+    | '/categories/$slug'
+    | '/tattoos/$slug'
+    | '/categories'
+    | '/tattoos'
+    | '/api/public/paypal-ipn'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/book'
+    | '/my-bookings'
+    | '/notifications'
+    | '/categories/$slug'
+    | '/tattoos/$slug'
+    | '/categories/'
+    | '/tattoos/'
+    | '/api/public/paypal-ipn'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  BookRoute: typeof BookRoute
+  MyBookingsRoute: typeof MyBookingsRoute
+  NotificationsRoute: typeof NotificationsRoute
+  CategoriesSlugRoute: typeof CategoriesSlugRoute
+  TattoosSlugRoute: typeof TattoosSlugRoute
+  CategoriesIndexRoute: typeof CategoriesIndexRoute
+  TattoosIndexRoute: typeof TattoosIndexRoute
+  ApiPublicPaypalIpnRoute: typeof ApiPublicPaypalIpnRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +169,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-bookings': {
+      id: '/my-bookings'
+      path: '/my-bookings'
+      fullPath: '/my-bookings'
+      preLoaderRoute: typeof MyBookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categories/': {
+      id: '/categories/'
+      path: '/categories'
+      fullPath: '/categories/'
+      preLoaderRoute: typeof CategoriesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categories/$slug': {
+      id: '/categories/$slug'
+      path: '/categories/$slug'
+      fullPath: '/categories/$slug'
+      preLoaderRoute: typeof CategoriesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tattoos/': {
+      id: '/tattoos/'
+      path: '/tattoos'
+      fullPath: '/tattoos/'
+      preLoaderRoute: typeof TattoosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tattoos/$slug': {
+      id: '/tattoos/$slug'
+      path: '/tattoos/$slug'
+      fullPath: '/tattoos/$slug'
+      preLoaderRoute: typeof TattoosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/paypal-ipn': {
+      id: '/api/public/paypal-ipn'
+      path: '/api/public/paypal-ipn'
+      fullPath: '/api/public/paypal-ipn'
+      preLoaderRoute: typeof ApiPublicPaypalIpnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  BookRoute: BookRoute,
+  MyBookingsRoute: MyBookingsRoute,
+  NotificationsRoute: NotificationsRoute,
+  CategoriesSlugRoute: CategoriesSlugRoute,
+  TattoosSlugRoute: TattoosSlugRoute,
+  CategoriesIndexRoute: CategoriesIndexRoute,
+  TattoosIndexRoute: TattoosIndexRoute,
+  ApiPublicPaypalIpnRoute: ApiPublicPaypalIpnRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
