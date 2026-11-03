@@ -10,11 +10,35 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CategoriesIndexRouteImport } from './routes/categories.index'
+import { Route as CategoriesSlugRouteImport } from './routes/categories.$slug'
+import { Route as TattoosIndexRouteImport } from './routes/tattoos.index'
+import { Route as TattoosSlugRouteImport } from './routes/tattoos.$slug'
 import { Route as ApiPublicPaypalIpnRouteImport } from './routes/api/public/paypal-ipn'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriesIndexRoute = CategoriesIndexRouteImport.update({
+  id: '/categories/',
+  path: '/categories/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriesSlugRoute = CategoriesSlugRouteImport.update({
+  id: '/categories/$slug',
+  path: '/categories/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TattoosIndexRoute = TattoosIndexRouteImport.update({
+  id: '/tattoos/',
+  path: '/tattoos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TattoosSlugRoute = TattoosSlugRouteImport.update({
+  id: '/tattoos/$slug',
+  path: '/tattoos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicPaypalIpnRoute = ApiPublicPaypalIpnRouteImport.update({
@@ -25,27 +49,62 @@ const ApiPublicPaypalIpnRoute = ApiPublicPaypalIpnRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/categories/$slug': typeof CategoriesSlugRoute
+  '/tattoos/$slug': typeof TattoosSlugRoute
+  '/categories/': typeof CategoriesIndexRoute
+  '/tattoos/': typeof TattoosIndexRoute
   '/api/public/paypal-ipn': typeof ApiPublicPaypalIpnRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/categories/$slug': typeof CategoriesSlugRoute
+  '/tattoos/$slug': typeof TattoosSlugRoute
+  '/categories': typeof CategoriesIndexRoute
+  '/tattoos': typeof TattoosIndexRoute
   '/api/public/paypal-ipn': typeof ApiPublicPaypalIpnRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/categories/$slug': typeof CategoriesSlugRoute
+  '/tattoos/$slug': typeof TattoosSlugRoute
+  '/categories/': typeof CategoriesIndexRoute
+  '/tattoos/': typeof TattoosIndexRoute
   '/api/public/paypal-ipn': typeof ApiPublicPaypalIpnRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/public/paypal-ipn'
+  fullPaths:
+    | '/'
+    | '/categories/$slug'
+    | '/tattoos/$slug'
+    | '/categories/'
+    | '/tattoos/'
+    | '/api/public/paypal-ipn'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/public/paypal-ipn'
-  id: '__root__' | '/' | '/api/public/paypal-ipn'
+  to:
+    | '/'
+    | '/categories/$slug'
+    | '/tattoos/$slug'
+    | '/categories'
+    | '/tattoos'
+    | '/api/public/paypal-ipn'
+  id:
+    | '__root__'
+    | '/'
+    | '/categories/$slug'
+    | '/tattoos/$slug'
+    | '/categories/'
+    | '/tattoos/'
+    | '/api/public/paypal-ipn'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CategoriesSlugRoute: typeof CategoriesSlugRoute
+  TattoosSlugRoute: typeof TattoosSlugRoute
+  CategoriesIndexRoute: typeof CategoriesIndexRoute
+  TattoosIndexRoute: typeof TattoosIndexRoute
   ApiPublicPaypalIpnRoute: typeof ApiPublicPaypalIpnRoute
 }
 
@@ -56,6 +115,34 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categories/': {
+      id: '/categories/'
+      path: '/categories'
+      fullPath: '/categories/'
+      preLoaderRoute: typeof CategoriesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categories/$slug': {
+      id: '/categories/$slug'
+      path: '/categories/$slug'
+      fullPath: '/categories/$slug'
+      preLoaderRoute: typeof CategoriesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tattoos/': {
+      id: '/tattoos/'
+      path: '/tattoos'
+      fullPath: '/tattoos/'
+      preLoaderRoute: typeof TattoosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tattoos/$slug': {
+      id: '/tattoos/$slug'
+      path: '/tattoos/$slug'
+      fullPath: '/tattoos/$slug'
+      preLoaderRoute: typeof TattoosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/paypal-ipn': {
@@ -70,6 +157,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CategoriesSlugRoute: CategoriesSlugRoute,
+  TattoosSlugRoute: TattoosSlugRoute,
+  CategoriesIndexRoute: CategoriesIndexRoute,
+  TattoosIndexRoute: TattoosIndexRoute,
   ApiPublicPaypalIpnRoute: ApiPublicPaypalIpnRoute,
 }
 export const routeTree = rootRouteImport
