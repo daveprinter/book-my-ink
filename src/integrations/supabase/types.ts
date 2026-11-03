@@ -14,7 +14,201 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      admin_otps: {
+        Row: {
+          code_hash: string
+          created_at: string
+          expires_at: string
+          id: string
+          used: boolean
+        }
+        Insert: {
+          code_hash: string
+          created_at?: string
+          expires_at: string
+          id?: string
+          used?: boolean
+        }
+        Update: {
+          code_hash?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          used?: boolean
+        }
+        Relationships: []
+      }
+      admin_sessions: {
+        Row: {
+          created_at: string
+          expires_at: string
+          token_hash: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at: string
+          token_hash: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          token_hash?: string
+        }
+        Relationships: []
+      }
+      bookings: {
+        Row: {
+          appointment_date: string
+          appointment_time: string
+          balance_usd: number
+          created_at: string
+          custom_description: string | null
+          customer_name: string
+          deposit_usd: number
+          discount_pct: number
+          email: string
+          final_price_usd: number
+          id: string
+          notes: string | null
+          payment_method: string
+          payment_status: string
+          phone: string
+          placement: string | null
+          price_usd: number
+          ref: string
+          reminders_enabled: boolean
+          size: string | null
+          status: string
+          tattoo_slug: string | null
+        }
+        Insert: {
+          appointment_date: string
+          appointment_time: string
+          balance_usd: number
+          created_at?: string
+          custom_description?: string | null
+          customer_name: string
+          deposit_usd: number
+          discount_pct?: number
+          email: string
+          final_price_usd: number
+          id?: string
+          notes?: string | null
+          payment_method?: string
+          payment_status?: string
+          phone: string
+          placement?: string | null
+          price_usd: number
+          ref: string
+          reminders_enabled?: boolean
+          size?: string | null
+          status?: string
+          tattoo_slug?: string | null
+        }
+        Update: {
+          appointment_date?: string
+          appointment_time?: string
+          balance_usd?: number
+          created_at?: string
+          custom_description?: string | null
+          customer_name?: string
+          deposit_usd?: number
+          discount_pct?: number
+          email?: string
+          final_price_usd?: number
+          id?: string
+          notes?: string | null
+          payment_method?: string
+          payment_status?: string
+          phone?: string
+          placement?: string | null
+          price_usd?: number
+          ref?: string
+          reminders_enabled?: boolean
+          size?: string | null
+          status?: string
+          tattoo_slug?: string | null
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string
+          booking_ref: string | null
+          created_at: string
+          id: string
+          title: string
+        }
+        Insert: {
+          body: string
+          booking_ref?: string | null
+          created_at?: string
+          id?: string
+          title: string
+        }
+        Update: {
+          body?: string
+          booking_ref?: string | null
+          created_at?: string
+          id?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          amount_usd: number | null
+          booking_ref: string | null
+          created_at: string
+          id: string
+          payer_email: string | null
+          provider: string
+          raw: Json | null
+          status: string | null
+          txn_id: string | null
+        }
+        Insert: {
+          amount_usd?: number | null
+          booking_ref?: string | null
+          created_at?: string
+          id?: string
+          payer_email?: string | null
+          provider?: string
+          raw?: Json | null
+          status?: string | null
+          txn_id?: string | null
+        }
+        Update: {
+          amount_usd?: number | null
+          booking_ref?: string | null
+          created_at?: string
+          id?: string
+          payer_email?: string | null
+          provider?: string
+          raw?: Json | null
+          status?: string | null
+          txn_id?: string | null
+        }
+        Relationships: []
+      }
+      site_presence: {
+        Row: {
+          last_seen: string
+          path: string | null
+          visitor_id: string
+        }
+        Insert: {
+          last_seen?: string
+          path?: string | null
+          visitor_id: string
+        }
+        Update: {
+          last_seen?: string
+          path?: string | null
+          visitor_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
