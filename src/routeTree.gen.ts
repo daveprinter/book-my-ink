@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BookRouteImport } from './routes/book'
 import { Route as CategoriesIndexRouteImport } from './routes/categories.index'
 import { Route as CategoriesSlugRouteImport } from './routes/categories.$slug'
 import { Route as TattoosIndexRouteImport } from './routes/tattoos.index'
@@ -19,6 +20,11 @@ import { Route as ApiPublicPaypalIpnRouteImport } from './routes/api/public/payp
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookRoute = BookRouteImport.update({
+  id: '/book',
+  path: '/book',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoriesIndexRoute = CategoriesIndexRouteImport.update({
@@ -49,6 +55,7 @@ const ApiPublicPaypalIpnRoute = ApiPublicPaypalIpnRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/tattoos/$slug': typeof TattoosSlugRoute
   '/categories/': typeof CategoriesIndexRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/tattoos/$slug': typeof TattoosSlugRoute
   '/categories': typeof CategoriesIndexRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/tattoos/$slug': typeof TattoosSlugRoute
   '/categories/': typeof CategoriesIndexRoute
@@ -76,6 +85,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/book'
     | '/categories/$slug'
     | '/tattoos/$slug'
     | '/categories/'
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/book'
     | '/categories/$slug'
     | '/tattoos/$slug'
     | '/categories'
@@ -92,6 +103,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/book'
     | '/categories/$slug'
     | '/tattoos/$slug'
     | '/categories/'
@@ -101,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BookRoute: typeof BookRoute
   CategoriesSlugRoute: typeof CategoriesSlugRoute
   TattoosSlugRoute: typeof TattoosSlugRoute
   CategoriesIndexRoute: typeof CategoriesIndexRoute
@@ -115,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/categories/': {
@@ -157,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BookRoute: BookRoute,
   CategoriesSlugRoute: CategoriesSlugRoute,
   TattoosSlugRoute: TattoosSlugRoute,
   CategoriesIndexRoute: CategoriesIndexRoute,
