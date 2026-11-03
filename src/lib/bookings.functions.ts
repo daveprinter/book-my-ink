@@ -129,11 +129,11 @@ export const requestAdminOtp = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     if (data.pin !== ADMIN_PIN) throw new Error("Invalid admin code");
     if (data.email.trim().toLowerCase() !== ADMIN_EMAIL) throw new Error("This email is not an admin");
-    const code = String(crypto.getRandomValues(new Uint32Array(1))[0] % 1000000).padStart(6, "0");
+    const code = String((crypto.getRandomValues(new Uint32Array(1))[0] ?? 0) % 1000000).padStart(6, "0");
     const sb = await admin();
     await sb.from("admin_otps").insert({ code_hash: await sha256(code), expires_at: new Date(Date.now() + 10 * 60000).toISOString() });
-    const LOVABLE_API_KEY = process.env.LOVABLE_API_KEY;
-    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+    const LOVABLE_API_KEY = process.env["LOVABLE_API_KEY"];
+    const RESEND_API_KEY = process.env["RESEND_API_KEY"];
     if (!LOVABLE_API_KEY || !RESEND_API_KEY) throw new Error("Email sending is not connected yet");
     const res = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
       method: "POST",
