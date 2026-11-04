@@ -127,7 +127,7 @@ function RootComponent() {
 }
 
 function CatalogSync({ children }: { children: ReactNode }) {
-  const { data, dataUpdatedAt } = useSuspenseQuery(catalogQuery);
+  const { data } = useSuspenseQuery(catalogQuery);
   applyCatalog(data);
-  return <div key={dataUpdatedAt} className="contents">{children}</div>;
+  return <div key={JSON.stringify(data)} className="contents">{children}</div>;
 }
