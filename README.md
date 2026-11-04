@@ -1,14 +1,18 @@
-# Welcome to your Lovable project
+# Book My Ink
+
+Hello. Create a website and choose an appropriate logo that loads with the link of the website and that appears in the publish. Choose an appropriate name for the tattoo website. Okay. Call the website, Book A Tattoo. All as one word. Then choose an appropriate logo. A professional logo, not just a simple logo, a professional logo. Or call it Book My Ink as one name, but the B, M, and I to be capital. Then the brand slogan will be, "Your art, your artist, your appointment. Your next tattoo starts here." Then it should show all the professional features a tattoo booking website should have with real samples. Different samples, appointment booking template. Proceeding to the next, it should maybe ask the user to type what kind of tattoo they want, or they can select from templates. So come up with different names of tattoos, like 20 different tattoos, their names, and their images. When they click on a certain tattoo, they can browse that tattoo at different angles. And also they can see the details and the tattoo meaning and the motivation that can drive someone to drawing that tattoo. And then there will be categories to choose from the tattoo. Cultural tattoos, love tattoos, and many categories. Can you put for me 15 different categories? And then when they click, they can explore different tattoos under that category and the price of each tattoo. You will decide the prices for me for now. Then it will show discount, current discount, and it should always remain as we are offering discount. Then it will show the deposit booking appointment, the book of appointment, the price to book the appointment, then the rest will be paid after drawing the tattoo when they come on that day. Then people can set notifications. The people who are ordering the tattoos, they can set notifications to be notified when the appointment date reaches or approaches. Then for the payment, we will integrate payment using PayPal. I will give you the PayPal account. You will use the email of the PayPal account, which is K-U-L-A-D-A-V-I-D 177@gmail.com. That is Kuladavid@gmail.com. Then there will be a payment option using card. That is the Mastercard or the Universal cards. So we will figure out which payment gateway we will use to integrate the payment. And it should be a free option if there is one, which they cut the amount or the payment on transaction. So I will opt for options of payment gateways that do not charge per subscription or do not charge before I even transact. Instead, they should cut a certain fee after, when a transaction is going through. So pick the best options for me. Then after they book, they can download their receipts and their details when they are booking, what kind of tattoo, everything, and they'll be told that they will be reached out and they will be sent an email to confirm their booking. Then there will be a notification tab inside the website that will be notifying them. We will reach out to you via your email on that day. So they schedule their appointment, they put a preferred date, then it says, checking whether the tattoo artists are flexible or available that day. But always it should check then say, "Yes, this is the perfect appointment date." And also they can change the date anytime they want.
+
+Also, add a three menu button. No. At the edge of the website, at the left side, there should be a visible navigation page, which is already there, always activated to navigate through different places, shortcuts, like that. And also add a button called Admin Panel. When it is clicked, it asks for an admin code. Then when the code is entered, for now the code is 9090. Now a field appears to enter admin email, which for now is the email I have told you just there above. I will share it, resend.com API key, so that you can integrate email sending only to me. So we do not need the domain or the paid version. So I will send you the resend.com API key for that account, so that when the admin enters the email, an email verification code of six digits is sent to my email. Then I enter the email, the code, then it proceeds. Then in the admin panel, I'll be able to see all the requests that have been made, all the bookings that have been made, the status of the tattoo booking, whether I can update the status from booking approved. Then now when I approve on their side, they will see that the booking has been approved and the appointment is ready. Please show up on this day, such things. Then I can be able to see all the payments that have been done. We will integrate webhooks with the payment gateway that we will use if they offer the webhook, so that we can track payments from here. All the bookings that have been made, details of the booker, that is the name, their email, their phone number, contact, and everything. Remember, everything should be in S dollars form. There will be also need to send notifications so I can configure custom notifications to send. Then I will be also seeing current active users in the site and current bookings and everything.
 
 This project was built with [Lovable](https://lovable.dev).
 
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/43aa259e-5b88-4715-ac0d-e86faf5aa814).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +24,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
