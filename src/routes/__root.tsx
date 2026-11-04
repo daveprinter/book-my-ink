@@ -14,6 +14,11 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AppShell } from "@/components/AppShell";
 import { Toaster } from "@/components/ui/sonner";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { getCatalog } from "@/lib/bookings.functions";
+import { applyCatalog } from "@/lib/catalog";
+
+export const catalogQuery = queryOptions({ queryKey: ["catalog"], queryFn: () => getCatalog(), staleTime: 30_000, refetchInterval: 60_000 });
 
 function NotFoundComponent() {
   return (
@@ -85,6 +90,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap" },
     ],
   }),
+  loader: ({ context }) => { context.queryClient.ensureQueryData(catalogQuery).catch(() => {}); },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -110,10 +116,18 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AppShell>
-        <Outlet />
-      </AppShell>
+      <CatalogSync>
+        <AppShell>
+          <Outlet />
+        </AppShell>
+      </CatalogSync>
       <Toaster />
     </QueryClientProvider>
   );
+}
+
+function CatalogSync({ children }: { children: ReactNode }) {
+  const { data, dataUpdatedAt } = useSuspenseQuery(catalogQuery);
+  applyCatalog(data);
+  return <div key={dataUpdatedAt} className="contents">{children}</div>;
 }

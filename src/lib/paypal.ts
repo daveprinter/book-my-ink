@@ -1,10 +1,10 @@
-import { PAYPAL_BUSINESS_EMAIL } from "./catalog";
+import { getPaypalEmail } from "./catalog";
 
 /** PayPal checkout link (PayPal account or debit/credit card as guest). No monthly fees — PayPal only takes a fee per sale. */
 export function paypalCheckoutUrl(opts: { ref: string; itemName: string; amount: number; origin: string }) {
   const p = new URLSearchParams({
     cmd: "_xclick",
-    business: PAYPAL_BUSINESS_EMAIL,
+    business: getPaypalEmail(),
     item_name: `BookMyInk deposit – ${opts.itemName} (${opts.ref})`,
     amount: opts.amount.toFixed(2),
     currency_code: "USD",
