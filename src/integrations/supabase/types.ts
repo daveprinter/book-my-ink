@@ -209,6 +209,57 @@ export type Database = {
         }
         Relationships: []
       }
+      site_settings: {
+        Row: {
+          key: string
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value: string
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: string
+        }
+        Relationships: []
+      }
+      tattoo_overrides: {
+        Row: {
+          details: string | null
+          image_url: string | null
+          meaning: string | null
+          motivation: string | null
+          name: string | null
+          price: number | null
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          details?: string | null
+          image_url?: string | null
+          meaning?: string | null
+          motivation?: string | null
+          name?: string | null
+          price?: number | null
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          details?: string | null
+          image_url?: string | null
+          meaning?: string | null
+          motivation?: string | null
+          name?: string | null
+          price?: number | null
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
