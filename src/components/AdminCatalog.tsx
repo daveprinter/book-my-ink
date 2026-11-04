@@ -55,7 +55,7 @@ function TattooEditor({ t, token }: { t: Tattoo; token: string }) {
 
   const save = async () => {
     const price = Number(f.price);
-    if (!price || price < 1) return toast.error("Enter a valid price");
+    if (!price || price < 1) { toast.error("Enter a valid price"); return; }
     setBusy(true);
     try {
       const image = file ? { base64: await toBase64(file), type: file.type as "image/jpeg" } : null;
@@ -73,7 +73,7 @@ function TattooEditor({ t, token }: { t: Tattoo; token: string }) {
           Change image
           <input type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={(e) => {
             const x = e.target.files?.[0]; if (!x) return;
-            if (x.size > 8 * 1024 * 1024) return toast.error("Image must be under 8 MB");
+            if (x.size > 8 * 1024 * 1024) { toast.error("Image must be under 8 MB"); return; }
             setFile(x); setPreview(URL.createObjectURL(x));
           }} />
         </label>
