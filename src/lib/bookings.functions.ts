@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { ADMIN_EMAIL, CUSTOM_BASE_PRICE, DEPOSIT_USD, DISCOUNT_PCT, getTattoo } from "./catalog";
+import { ADMIN_EMAIL, applyCatalog, CUSTOM_BASE_PRICE, DEPOSIT_USD, DISCOUNT_PCT, getTattoo, type CatalogData } from "./catalog";
 import { quote } from "./pricing";
 
 const admin = async () => (await import("@/integrations/supabase/client.server")).supabaseAdmin;
@@ -34,6 +34,7 @@ const bookingInput = z.object({
 export const createBooking = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => bookingInput.parse(d))
   .handler(async ({ data }) => {
+    applyCatalog(await loadCatalog());
     const t = getTattoo(data.tattoo_slug);
     if (!t && !data.custom_description) throw new Error("Pick a design or describe your idea");
     const q = quote(t ? t.price : CUSTOM_BASE_PRICE);
@@ -242,6 +243,58 @@ export const adminSendNotification = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const sb = await requireAdmin(data.token);
     await sb.from("notifications").insert({ booking_ref: data.booking_ref || null, title: data.title, body: data.body });
+    return { ok: true };
+  });
+
+export async function loadCatalog(): Promise<CatalogData> {
+  const sb = await admin();
+  const [o, s] = await Promise.all([
+    sb.from("tattoo_overrides").select("slug,name,price,image_url,details,meaning,motivation"),
+    sb.from("site_settings").select("value").eq("key", "paypal_email").maybeSingle(),
+  ]);
+  return { overrides: (o.data ?? []).map((r) => ({ ...r, price: r.price == null ? null : Number(r.price) })), paypalEmail: s.data?.value ?? null };
+}
+
+export const getCatalog = createServerFn({ method: "GET" }).handler(async () => loadCatalog());
+
+export const adminSaveTattoo = createServerFn({ method: "POST" })
+  .inputValidator((d: unknown) =>
+    tok.extend({
+      slug: z.string().min(1).max(80),
+      name: z.string().trim().min(1).max(100),
+      price: z.number().min(1).max(100000),
+      details: z.string().trim().max(1000),
+      meaning: z.string().trim().max(1000),
+      motivation: z.string().trim().max(1000),
+      image: z.object({ base64: z.string().max(12_000_000), type: z.enum(["image/jpeg", "image/png", "image/webp"]) }).nullable(),
+    }).parse(d),
+  )
+  .handler(async ({ data }) => {
+    const sb = await requireAdmin(data.token);
+    let image_url: string | undefined;
+    if (data.image) {
+      const bytes = Uint8Array.from(atob(data.image.base64), (c) => c.charCodeAt(0));
+      const path = `${data.slug}/${Date.now()}.${data.image.type.split("/")[1]}`;
+      const up = await sb.storage.from("tattoo-images").upload(path, bytes, { contentType: data.image.type, upsert: true });
+      if (up.error) throw new Error(up.error.message);
+      const signed = await sb.storage.from("tattoo-images").createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
+      if (signed.error) throw new Error(signed.error.message);
+      image_url = signed.data.signedUrl;
+    }
+    const { error } = await sb.from("tattoo_overrides").upsert({
+      slug: data.slug, name: data.name, price: data.price, details: data.details, meaning: data.meaning, motivation: data.motivation,
+      ...(image_url ? { image_url } : {}), updated_at: new Date().toISOString(),
+    });
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
+export const adminSavePaypalEmail = createServerFn({ method: "POST" })
+  .inputValidator((d: unknown) => tok.extend({ email: z.string().trim().email().max(255) }).parse(d))
+  .handler(async ({ data }) => {
+    const sb = await requireAdmin(data.token);
+    const { error } = await sb.from("site_settings").upsert({ key: "paypal_email", value: data.email.toLowerCase(), updated_at: new Date().toISOString() });
+    if (error) throw new Error(error.message);
     return { ok: true };
   });
 

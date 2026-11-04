@@ -11,6 +11,7 @@ import { getTattoo, usd } from "@/lib/catalog";
 import {
   adminDashboard, adminMarkPaid, adminSendNotification, adminUpdateStatus, checkAdminPin, requestAdminOtp, verifyAdminOtp,
 } from "@/lib/bookings.functions";
+import { AdminCatalog, AdminPaypal } from "@/components/AdminCatalog";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -112,7 +113,7 @@ function Dashboard({ token, onExpire }: { token: string; onExpire: () => void })
       </div>
 
       <Tabs defaultValue="bookings" className="mt-8">
-        <TabsList><TabsTrigger value="bookings">Bookings</TabsTrigger><TabsTrigger value="payments">Payments</TabsTrigger><TabsTrigger value="notify">Notifications</TabsTrigger></TabsList>
+        <TabsList><TabsTrigger value="bookings">Bookings</TabsTrigger><TabsTrigger value="payments">Payments</TabsTrigger><TabsTrigger value="notify">Notifications</TabsTrigger><TabsTrigger value="tattoos">Tattoos</TabsTrigger><TabsTrigger value="settings">Payment settings</TabsTrigger></TabsList>
 
         <TabsContent value="bookings" className="mt-4 space-y-3">
           {d.bookings.length === 0 && <p className="text-muted-foreground">No bookings yet.</p>}
@@ -180,6 +181,9 @@ function Dashboard({ token, onExpire }: { token: string; onExpire: () => void })
             ))}
           </div>
         </TabsContent>
+
+        <TabsContent value="tattoos" className="mt-4"><AdminCatalog token={token} /></TabsContent>
+        <TabsContent value="settings" className="mt-4"><AdminPaypal token={token} /></TabsContent>
       </Tabs>
     </div>
   );

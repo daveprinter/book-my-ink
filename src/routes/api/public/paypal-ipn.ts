@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PAYPAL_BUSINESS_EMAIL } from "@/lib/catalog";
+import { loadCatalog } from "@/lib/bookings.functions";
 
 // PayPal Instant Payment Notification (webhook). PayPal posts here after each payment;
 // we verify the message with PayPal before recording anything.
@@ -20,7 +21,9 @@ export const Route = createFileRoute("/api/public/paypal-ipn")({
         }
         const p = new URLSearchParams(body);
         const receiver = (p.get("receiver_email") || p.get("business") || "").toLowerCase();
-        if (receiver !== PAYPAL_BUSINESS_EMAIL) return new Response("ok");
+        const cat = await loadCatalog();
+        const accepted = [PAYPAL_BUSINESS_EMAIL, (cat.paypalEmail || "").toLowerCase()];
+        if (!accepted.includes(receiver)) return new Response("ok");
 
         const { supabaseAdmin: sb } = await import("@/integrations/supabase/client.server");
         const ref = p.get("custom") || p.get("invoice") || null;

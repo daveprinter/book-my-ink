@@ -87,3 +87,31 @@ export const getCategory = (slug: string) => CATEGORIES.find((c) => c.slug === s
 export const CUSTOM_BASE_PRICE = 250;
 export const PAYPAL_BUSINESS_EMAIL = "kuladavid177@gmail.com";
 export const ADMIN_EMAIL = "kuladavid177@gmail.com";
+
+/** Admin edits saved in the database, applied on top of the built-in catalog. */
+export type TattooOverride = {
+  slug: string; name: string | null; price: number | null; image_url: string | null;
+  details: string | null; meaning: string | null; motivation: string | null;
+};
+export type CatalogData = { overrides: TattooOverride[]; paypalEmail: string | null };
+
+const BASE = TATTOOS.map((t) => ({ ...t }));
+let paypalEmail = PAYPAL_BUSINESS_EMAIL;
+export const getPaypalEmail = () => paypalEmail;
+
+export function applyCatalog(data: CatalogData | undefined | null) {
+  if (!data) return;
+  BASE.forEach((b, i) => {
+    const o = data.overrides.find((x) => x.slug === b.slug);
+    TATTOOS[i] = {
+      ...b,
+      name: o?.name || b.name,
+      price: o?.price != null ? Number(o.price) : b.price,
+      image: o?.image_url || b.image,
+      details: o?.details || b.details,
+      meaning: o?.meaning || b.meaning,
+      motivation: o?.motivation || b.motivation,
+    };
+  });
+  paypalEmail = (data.paypalEmail || PAYPAL_BUSINESS_EMAIL).toLowerCase();
+}
